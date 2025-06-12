@@ -1,81 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>小舟畅聊-登录</title>
+    <title>小舟畅聊-注册</title>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <meta name="keywords"
-          content="Transparent Sign In Form Responsive Widget,Login form widgets, Sign up Web forms , Login signup Responsive web form,Flat Pricing table,Flat Drop downs,Registration Forms,News letter Forms,Elements"/>
-    <script type="application/x-javascript">
-        addEventListener("load", function () {
-            setTimeout(hideURLbar, 0);
-        }, false);
-
-        function hideURLbar() {
-            window.scrollTo(0, 1);
-        }
-    </script>
-
-    <script src="js/jquery-1.9.1.min.js"></script>
     <link rel="icon" href="img/chat.ico" type="image/x-icon"/>
-    <link rel="stylesheet" href="css/font-awesome.css"/> <!-- Font-Awesome-Icons-CSS -->
-    <link rel="stylesheet" href="css/login.css" type="text/css" media="all"/> <!-- Style-CSS -->
+    <link rel="stylesheet" href="css/font-awesome.css"/>
+    <link rel="stylesheet" href="css/login.css" type="text/css" media="all"/>
 </head>
-
-
 <body class="background">
 <div class="header-w3l">
     <h1>小舟畅聊</h1>
 </div>
 <div class="main-content-agile" id="app">
     <div class="sub-main-w3">
-        <h2>登录</h2>
-        <form id="loginForm">
+        <h2>注册</h2>
+        <form id="registerForm">
             <div class="icon1">
                 <input placeholder="用户名" id="username" v-model="user.username" type="text"/>
             </div>
-
+            <div class="icon3">
+                <input placeholder="昵称" id="nickname" v-model="user.nickname" type="text"/>
+            </div>
             <div class="icon2" style="position:relative;">
                 <input :type="showPwd ? 'text' : 'password'" placeholder="密码" id="password" v-model="user.password"/>
                 <span @click="showPwd = !showPwd" style="position:absolute;right:10px;top:10px;cursor:pointer;">
-        <i :class="showPwd ? 'fa fa-eye-slash' : 'fa fa-eye'"></i>
-    </span>
+                    <i :class="showPwd ? 'fa fa-eye-slash' : 'fa fa-eye'"></i>
+                </span>
             </div>
             <div class="clear"></div>
-            <input type="button" id="btn1" @click="login" value="登录"/>
+            <input type="button" id="btnRegister" @click="register" value="注册"/>
             <div class="icon1">
                 <span id="err_msg" style="color: red;">{{errMessage}}</span>
             </div>
             <div class="icon1">
-                <a href="register.html">没有账号？去注册</a>
+                <a href="login.html">已有账号？去登录</a>
             </div>
         </form>
     </div>
-</div>
-<div class="footer">
-    <!--<p>北京传智播客教育科技有限公司 版权所有Copyright 2006-2019  All Rights Reserved </p>-->
 </div>
 <script src="js/vue.js"></script>
 <script src="js/axios-0.18.0.js"></script>
 <script>
     new Vue({
-        el:"#app",
+        el: "#app",
         data() {
             return {
                 errMessage: "",
                 showPwd: false,
-                user:{
-                    username:"",
-                    password:""
+                user: {
+                    username: "",
+                    password: "",
+                    nickname: "默认昵称",
                 }
             }
         },
         methods: {
-            login() {
-                axios.post("user/login",this.user).then(res => {
-                    //判断登陆是否成功
+            register() {
+                axios.post("user/register", this.user).then(res => {
                     if(res.data.flag) {
-                        location.href = "main.html"
+                        alert("注册成功，请登录！");
+                        location.href = "login.html";
                     } else {
                         this.errMessage = res.data.message;
                     }
